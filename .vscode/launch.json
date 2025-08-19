@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Impact Graphics ZA (iOS)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "ios"
+        },
+        {
+            "name": "Impact Graphics ZA (Android)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "android"
+        },
+        {
+            "name": "Impact Graphics ZA (macOS)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "macos"
+        },
+        {
+            "name": "Impact Graphics ZA (Web)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome"
+        }
+    ]
+}
