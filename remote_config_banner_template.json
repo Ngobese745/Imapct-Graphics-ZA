@@ -1,0 +1,39 @@
+{
+  "parameters": {
+    "show_development_banner": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "description": "Toggle to show/hide the development banner",
+      "valueType": "BOOLEAN"
+    },
+    "development_banner_title": {
+      "defaultValue": {
+        "value": "🚧 App Under Development"
+      },
+      "description": "The title text displayed in the banner",
+      "valueType": "STRING"
+    },
+    "development_banner_message": {
+      "defaultValue": {
+        "value": "We're still working on improving your experience! Report any issues or suggestions via the menu."
+      },
+      "description": "The message text displayed in the banner",
+      "valueType": "STRING"
+    },
+    "development_banner_color": {
+      "defaultValue": {
+        "value": "#FF6B35"
+      },
+      "description": "Background color of the banner (hex format)",
+      "valueType": "STRING"
+    },
+    "development_banner_text_color": {
+      "defaultValue": {
+        "value": "#FFFFFF"
+      },
+      "description": "Text color of the banner (hex format)",
+      "valueType": "STRING"
+    }
+  }
+}

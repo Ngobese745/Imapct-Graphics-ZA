@@ -1,11 +1,11 @@
 {
-    "name": "impact_graphics_za",
-    "short_name": "impact_graphics_za",
+    "name": "Impact Graphics ZA - Marketing & Design Services",
+    "short_name": "Impact Graphics",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#2C2C2C",
+    "theme_color": "#8B0000",
+    "description": "Transform your business with professional marketing services! Logo design, social media management, branding, and digital marketing solutions. Start your project today!",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

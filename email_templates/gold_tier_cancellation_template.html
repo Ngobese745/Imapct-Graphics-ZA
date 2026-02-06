@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold Tier Cancelled - Impact Graphics ZA</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .email-container {
+            max-width: 650px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .sad-icon {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .company-name {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 15px 0 5px 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .header-subtitle {
+            font-size: 16px;
+            margin: 0;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+            background: #ffffff;
+        }
+
+        .greeting {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .cancellation-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 35px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 5px solid #6c757d;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .cancellation-title {
+            color: #495057;
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+
+        .cancellation-subtitle {
+            color: #6c757d;
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            font-weight: 500;
+        }
+
+        .subscription-details {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .detail-value {
+            color: #6c757d;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .feedback-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-radius: 12px;
+            border-left: 5px solid #ff9800;
+            text-align: center;
+        }
+
+        .feedback-title {
+            color: #f57c00;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+
+        .feedback-text {
+            color: #e65100;
+            font-size: 16px;
+            margin: 0 0 20px 0;
+            line-height: 1.6;
+        }
+
+        .reactivate-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 12px;
+            border-left: 5px solid #28a745;
+        }
+
+        .reactivate-title {
+            color: #28a745;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .reactivate-text {
+            color: #2e7d32;
+            font-size: 16px;
+            margin: 0 0 20px 0;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin: 35px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 10px;
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #6c757d, transparent);
+            margin: 30px 0;
+        }
+
+        .footer {
+            background: #2c2c2c;
+            color: #ffffff;
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+
+        .contact-item {
+            margin: 8px 0;
+        }
+
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 10px;
+                border-radius: 8px;
+            }
+
+            .header,
+            .content,
+            .footer {
+                padding: 20px;
+            }
+
+            .company-name {
+                font-size: 24px;
+            }
+
+            .sad-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+
+            .cancellation-card {
+                padding: 20px;
+            }
+
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="email-container">
+        <div class="header">
+            <img src="https://impactgraphicsza.co.za/assets/logo.png" alt="Impact Graphics ZA" width="80" height="80"
+                style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 20px; background: rgba(255,255,255,0.1); padding: 8px;" />
+            <div class="sad-icon">😢</div>
+            <h1 class="company-name">IMPACT GRAPHICS ZA</h1>
+            <p class="header-subtitle">Professional Design & Marketing Solutions</p>
+        </div>
+
+        <div class="content">
+            <div class="greeting">Hello {{client_name}},</div>
+
+            <div class="cancellation-card">
+                <h2 class="cancellation-title">Gold Tier Cancelled</h2>
+                <p class="cancellation-subtitle">We're sorry to see you go</p>
+            </div>
+
+            <p style="font-size: 16px; color: #495057; line-height: 1.8;">
+                Your Gold Tier subscription has been successfully cancelled as requested. We're sad to see you go,
+                but we understand that circumstances change.
+            </p>
+
+            <div class="subscription-details">
+                <div class="detail-row">
+                    <span class="detail-label">Subscription Plan</span>
+                    <span class="detail-value">Gold Tier (Cancelled)</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Cancellation Date</span>
+                    <span class="detail-value">{{cancellation_date}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Access Until</span>
+                    <span class="detail-value">{{access_until_date}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value">✗ CANCELLED</span>
+                </div>
+            </div>
+
+            <p
+                style="font-size: 15px; color: #495057; line-height: 1.8; background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <strong>Note:</strong> You'll continue to have access to your Gold Tier benefits until
+                <strong>{{access_until_date}}</strong>. After this date, your account will revert to the standard free
+                tier.
+            </p>
+
+            <div class="feedback-section">
+                <h3 class="feedback-title">We Value Your Feedback</h3>
+                <p class="feedback-text">
+                    Your opinion matters to us! We'd love to know why you cancelled and how we can improve.
+                    Would you mind sharing your feedback with us?
+                </p>
+                <a href="mailto:admin@impactgraphicsza.co.za?subject=Gold%20Tier%20Cancellation%20Feedback"
+                    class="cta-button secondary">
+                    Share Feedback
+                </a>
+            </div>
+
+            <div class="reactivate-section">
+                <h3 class="reactivate-title">Changed Your Mind?</h3>
+                <p class="reactivate-text">
+                    You can reactivate your Gold Tier subscription anytime! All your previous benefits
+                    will be restored immediately upon reactivation.
+                </p>
+                <a href="mailto:admin@impactgraphicsza.co.za?subject=Reactivate%20Gold%20Tier" class="cta-button">
+                    Reactivate Gold Tier
+                </a>
+            </div>
+
+            <div class="divider"></div>
+
+            <p style="font-size: 15px; color: #495057; line-height: 1.8; text-align: center; margin: 25px 0;">
+                Thank you for being a Gold Tier member. We hope to see you again soon, and you're always
+                welcome to use our standard services anytime.
+            </p>
+
+            <p style="font-size: 14px; color: #6c757d; text-align: center; margin-top: 30px;">
+                If you cancelled by mistake or have any questions, please contact us immediately.
+            </p>
+        </div>
+
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">IMPACT GRAPHICS ZA</div>
+                <div class="contact-info">
+                    <div class="contact-item"><strong>Email:</strong> admin@impactgraphicsza.co.za</div>
+                    <div class="contact-item"><strong>Website:</strong> www.impactgraphicsza.co.za</div>
+                    <div class="contact-item"><strong>Phone:</strong> +27 68 367 5755</div>
+                </div>
+                <div style="margin-top: 20px; font-size: 12px; opacity: 0.7;">
+                    <p>This email confirms your Gold Tier subscription cancellation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

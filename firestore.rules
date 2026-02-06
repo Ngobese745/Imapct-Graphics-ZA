@@ -1,0 +1,193 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can only access their own profile
+    // Google Sign-In Restriction: Only allow if user doesn't exist yet OR provider matches
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null && 
+        request.auth.uid == userId &&
+        (
+          // Allow if user profile doesn't exist yet (new user signup)
+          !exists(/databases/$(database)/documents/users/$(userId)) ||
+          // Allow if provider field is not being changed (updates to other fields)
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['provider']) ||
+          // Allow if user is admin
+          get(/databases/$(database)/documents/users/$(userId)).data.role == 'admin'
+        );
+    }
+    
+    // Updates/Notifications - Users can read their own notifications and mark them as read
+    match /updates/{updateId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow update: if request.auth != null && 
+        resource.data.userId == request.auth.uid &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['isRead', 'readAt']);
+    }
+    
+    // Clients and orders accessible to authenticated users
+    match /clients/{clientId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    match /orders/{orderId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      allow update: if request.auth != null && 
+        (resource.data.userId == request.auth.uid || 
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'cancelledAt', 'cancelledBy', 'cancelReason', 'updatedAt']));
+    }
+    
+    // Admin notifications - only admins can create, users can read their own
+    match /admin_notifications/{notificationId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Transactions - users can read their own transactions
+    match /transactions/{transactionId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null;
+    }
+    
+    // Wallet transactions - users can read their own wallet transactions
+    match /walletTransactions/{transactionId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null;
+    }
+    
+    // Wallets - users can read their own wallet
+    match /wallets/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Products - read only for users, write for admins
+    match /products/{productId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Categories - read only for users, write for admins
+    match /categories/{categoryId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Services - read only for users, write for admins
+    match /services/{serviceId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Cart - users can only access their own cart
+    match /carts/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Cart items - users can only access their own cart items
+    match /carts/{userId}/items/{itemId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Alternative cart collection (cart vs carts)
+    match /cart/{cartId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Shared links (Portfolio) - allow read for everyone (including guests), write for authenticated users
+    match /shared_links/{linkId} {
+      allow read: if true; // Allow everyone to read portfolio content
+      allow write: if request.auth != null && (
+        request.auth.token.email.matches('.*@impactgraphicsza\\.co\\.za$') ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+    
+    // Templates - users can read, admins can write
+    match /templates/{templateId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Delayed subscriptions - allow all operations for authenticated users
+    match /delayed_subscriptions/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Loyalty points - users can read their own, write for admins
+    match /loyalty_points/{userId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // User profiles - users can read their own, write for admins
+    match /user_profiles/{userId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Notifications - users can read their own, write for admins
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Admin notifications - allow all operations for authenticated users
+    match /admin_notifications/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Referrals - users can read their own referrals, write for admins
+    match /referrals/{referralId} {
+      allow read: if request.auth != null && 
+        (resource.data.referrerId == request.auth.uid || 
+         resource.data.referredUserId == request.auth.uid);
+      allow write: if request.auth != null;
+    }
+    
+    // Allow queries on referrals collection
+    match /referrals/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // User documents - users can read their own documents, write for admins
+    match /user_documents/{documentId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null;
+    }
+    
+    // Allow queries on user_documents collection
+    match /user_documents/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Consultations - users can read their own consultations, write for admins
+    match /consultations/{consultationId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow write: if request.auth != null;
+    }
+    
+    // Consultation messages - users can read/write messages in their own consultations
+    match /consultations/{consultationId}/messages/{messageId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Allow queries on consultations collection
+    match /consultations/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Package Subscriptions - Admin can manage, users can read their own
+    match /package_subscriptions/{subscriptionId} {
+      // Admin can read/write all
+      allow read, write: if request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      
+      // Users can only read their own subscriptions
+      allow read: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+    }
+    
+    // Catch-all rule for any other collections - allow all operations for authenticated users
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

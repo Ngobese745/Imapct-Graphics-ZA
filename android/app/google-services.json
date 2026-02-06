@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "884752435887",
+    "project_id": "impact-graphics-za-266ef",
+    "storage_bucket": "impact-graphics-za-266ef.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884752435887:android:ee2930e7879331dd52e25a",
+        "android_client_info": {
+          "package_name": "com.delivery.impactgraphicsza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884752435887-4rf9jhikf4ht028d0gbikmvfgl2o13hr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delivery.impactgraphicsza",
+            "certificate_hash": "b2479029761a32456eee3895aa1c0d6a2f6c5e1f"
+          }
+        },
+        {
+          "client_id": "884752435887-f57pbhsivqj444gdf0anmhq5ld1krcj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF3rsbeRfpBTNF6SF4MFoTlaE5tuR6Z_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884752435887-f57pbhsivqj444gdf0anmhq5ld1krcj1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "884752435887-et497k30lajc3he52n5eu72g2dt9dnhs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.impactgraphics.za.impactGraphicsZa"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-2168762108450116~4671727071"
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884752435887:android:ef2d3f143a91a71752e25a",
+        "android_client_info": {
+          "package_name": "com.impactgraphics.za.impact_graphics_za"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884752435887-f57pbhsivqj444gdf0anmhq5ld1krcj1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF3rsbeRfpBTNF6SF4MFoTlaE5tuR6Z_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884752435887-f57pbhsivqj444gdf0anmhq5ld1krcj1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "884752435887-et497k30lajc3he52n5eu72g2dt9dnhs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.impactgraphics.za.impactGraphicsZa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

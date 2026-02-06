@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Portfolio Update - Impact Graphics ZA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #e94560 0%, #c23a52 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.05)"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .portfolio-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .company-name {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 15px 0 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .header-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .content {
+            padding: 40px 30px;
+            color: #ffffff;
+        }
+
+        .greeting {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .message {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .portfolio-card {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, rgba(194, 58, 82, 0.1) 100%);
+            border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #e94560, #c23a52, #e94560);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: gradient-rotate 3s linear infinite;
+        }
+
+        @keyframes gradient-rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .portfolio-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e94560;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .portfolio-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .view-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e94560 0%, #c23a52 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .view-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(233, 69, 96, 0.6);
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.5), transparent);
+            margin: 30px 0;
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .info-section h3 {
+            color: #e94560;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .info-section p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #0a1929 0%, #16213e 100%);
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 2px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .footer-content {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #e94560;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .contact-info {
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .contact-item {
+            margin: 8px 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-item strong {
+            color: #e94560;
+        }
+
+        .social-links {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-link {
+            color: #e94560 !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #ffffff !important;
+        }
+
+        .footer-note {
+            margin-top: 25px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="https://impactgraphicsza.co.za/assets/logo.png" alt="Impact Graphics ZA" width="80" height="80"
+                style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-bottom: 20px; background: rgba(255,255,255,0.1); padding: 8px;" />
+            <div class="portfolio-icon">🎨</div>
+            <h1 class="company-name">IMPACT GRAPHICS ZA</h1>
+            <p class="header-subtitle">Professional Design & Marketing Solutions</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">New Portfolio Update! 🎉</div>
+
+            <p class="message">
+                Hi <strong>{{client_name}}</strong>,
+            </p>
+
+            <p class="message">
+                We're excited to share our latest work with you! Check out our newest portfolio addition that showcases
+                our creative capabilities and attention to detail.
+            </p>
+
+            <!-- Portfolio Card -->
+            <div class="portfolio-card">
+                <div class="portfolio-title">
+                    ✨ Latest Portfolio Addition
+                </div>
+                <div class="portfolio-description">
+                    Our team has just added a new project to our portfolio. Click the button below to view our latest
+                    creative work and get inspired for your next project!
+                </div>
+            </div>
+
+            <!-- View Button -->
+            <div class="button-container">
+                <a href="{{portfolio_link}}" class="view-button" style="color: #ffffff;">
+                    View Portfolio →
+                </a>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Info Section -->
+            <div class="info-section">
+                <h3>💡 Get Inspired</h3>
+                <p>
+                    Browse through our portfolio to see examples of our work across various design disciplines. Whether
+                    you're looking for branding, marketing materials, or digital design, we've got you covered.
+                </p>
+            </div>
+
+            <p class="message">
+                Have a project in mind? We'd love to hear from you! Contact us to discuss how we can bring your vision
+                to life.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <img src="https://impactgraphicsza.co.za/assets/logo.png" alt="Impact Graphics ZA" width="40"
+                    height="40"
+                    style="border-radius: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.1); padding: 4px;" />
+                <div class="footer-logo">IMPACT GRAPHICS ZA</div>
+                <div class="contact-info">
+                    <div class="contact-item"><strong>Email:</strong> admin@impactgraphicsza.co.za</div>
+                    <div class="contact-item"><strong>Website:</strong> www.impactgraphicsza.co.za</div>
+                    <div class="contact-item"><strong>Phone:</strong> +27 (0) 11 123 4567</div>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Facebook</a>
+                </div>
+                <p class="footer-note">
+                    You're receiving this email because you're a valued member of the Impact Graphics ZA community.<br>
+                    © 2025 Impact Graphics ZA. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

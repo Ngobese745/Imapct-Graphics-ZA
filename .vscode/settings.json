@@ -12,5 +12,6 @@
         "**/.flutter-plugins-dependencies": true,
         "**/.packages": true,
         "**/build": true
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "automatic"
 }

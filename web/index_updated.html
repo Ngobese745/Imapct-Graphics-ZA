@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZKSNENBR03"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-ZKSNENBR03');
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '772412775233386');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=772412775233386&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Impact Graphics ZA - Marketing Agency</title>
+    <style type="text/css">
+        /* Global Styles */
+        :root {
+            --primary: #8B0000;
+            --primary-dark: #6B0000;
+            --secondary: #C62828;
+            --dark-bg: #1A1A1A;
+            --card-bg: #2A2A2A;
+            --light-text: #ecf0f1;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+            --text-secondary: #bbb;
+            --success: #4CAF50;
+            --warning: #FFA500;
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            --dark-bg: #f9f9f9;
+            --card-bg: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --text-color: #333333;
+            --text-secondary: #666666;
+        }
+
+        body.light-mode header {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .service-card,
+        body.light-mode .pricing-card {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        body.light-mode .service-card:hover {
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--card-bg);
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn-sign-in {
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 1px solid var(--primary);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-sign-in:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+
+        .btn-create-account {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-create-account:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            z-index: 1001;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background-color: rgba(139, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .theme-toggle i {
+            font-size: 18px;
+        }
+
+        .mobile-theme-toggle {
+            display: none;
+        }
+
+        /* App Launch Banner - NEW */
+        .app-launch-banner {
+            background: linear-gradient(135deg, #1A1A1A 0%, var(--primary) 50%, var(--secondary) 100%);
+            padding: 20px 0;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-launch-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .app-launch-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .launch-info {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .launch-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--success);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .launch-info h2 {
+            font-size: clamp(20px, 4vw, 28px);
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .launch-info p {
+            font-size: clamp(14px, 2vw, 16px);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 12px;
+        }
+
+        .launch-date {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        .launch-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-web-app {
+            background-color: white;
+            color: var(--primary);
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-web-app:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-notify {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid white;
+        }
+
+        .btn-notify:hover {
+            background-color: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .platform-badges {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: white;
+        }
+
+        .platform-badge i {
+            font-size: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 90vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(28px, 5vw, 48px);
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2.5vw, 20px);
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 60px 0;
+            background-color: var(--dark-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(28px, 4vw, 36px);
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: clamp(14px, 2vw, 16px);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(139, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+
+        .service-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .service-card:hover .service-img img {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 20px;
+        }
+
+        .service-content h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        .service-content p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 60px 0;
+            background-color: var(--card-bg);
+        }
+
+        .scroll-hint {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .scroll-hint i {
+            animation: slide 2s infinite;
+        }
+
+        @keyframes slide {
+
+            0%,
+            100% {
+                transform: translateX(-5px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .pricing-card {
+            background-color: var(--dark-bg);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--primary);
+            position: relative;
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pricing-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .pricing-card .price {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .pricing-card .price span {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .pricing-card ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-card ul li:before {
+            content: "•";
+            color: var(--primary);
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        /* About Section */
+        .about {
+            padding: 60px 0;
+            background-color: var(--dark-bg);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+
+        .about-text h2 {
+            font-size: clamp(28px, 4vw, 36px);
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .about-text p {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 60px 0;
+            background-color: var(--card-bg);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .contact-info h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .contact-info p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .contact-details div {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .contact-details i {
+            margin-right: 12px;
+            color: var(--primary);
+            font-size: 18px;
+            min-width: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f0f0f;
+            color: white;
+            padding: 40px 0 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-col p {
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: rgba(139, 0, 0, 0.2);
+            border-radius: 50%;
+            color: white;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* App Modal - Updated */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 35px;
+            border-radius: 16px;
+            max-width: 550px;
+            width: 90%;
+            text-align: center;
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+        }
+
+        .modal-content h2 {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .modal-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .modal-buttons .btn {
+            min-width: 140px;
+        }
+
+        .close-modal {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background-color: var(--warning);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+
+        /* Mobile Menu Section Label */
+        .mobile-section-label {
+            display: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0 10px 0;
+            padding-left: 10px;
+        }
+
+        .mobile-auth-buttons {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .mobile-auth-buttons .btn-sign-in,
+        .mobile-auth-buttons .btn-create-account {
+            width: 100%;
+            text-align: center;
+            display: block;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-img {
+                order: -1;
+            }
+
+            .app-launch-content {
+                text-align: center;
+                justify-content: center;
+            }
+
+            .launch-info {
+                text-align: center;
+            }
+
+            .launch-actions {
+                justify-content: center;
+            }
+
+            .platform-badges {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+
+            .nav-right {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                background-color: var(--card-bg);
+                padding: 80px 20px 20px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+                transition: all 0.3s ease;
+                z-index: 999;
+                flex-direction: column;
+                align-items: flex-start;
+                overflow-y: auto;
+            }
+
+            .nav-right.active {
+                left: 0;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav ul li {
+                margin: 0;
+                width: 100%;
+                padding: 12px 10px;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav ul li a {
+                font-size: 16px;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .theme-toggle {
+                display: none;
+            }
+
+            .mobile-section-label {
+                display: block;
+            }
+
+            .mobile-auth-buttons {
+                display: flex;
+                width: 100%;
+            }
+
+            .mobile-theme-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                padding: 12px 10px;
+                border-bottom: 1px solid var(--border-color);
+                cursor: pointer;
+            }
+
+            .mobile-theme-toggle:hover {
+                background-color: rgba(139, 0, 0, 0.1);
+            }
+
+            .mobile-theme-toggle span {
+                color: var(--text-color);
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            .mobile-theme-toggle i {
+                color: var(--primary);
+                font-size: 20px;
+            }
+
+            .app-launch-banner {
+                margin-top: 70px;
+                padding: 25px 0;
+            }
+
+            .launch-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-web-app,
+            .btn-notify {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 80px 0;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Mobile Scrollable Pricing */
+            .pricing-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                gap: 20px;
+                padding: 0 20px 20px;
+                -webkit-overflow-scrolling: touch;
+                scroll-behavior: smooth;
+            }
+
+            .pricing-grid::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .pricing-grid::-webkit-scrollbar-track {
+                background: var(--dark-bg);
+                border-radius: 10px;
+            }
+
+            .pricing-grid::-webkit-scrollbar-thumb {
+                background: var(--primary);
+                border-radius: 10px;
+            }
+
+            .pricing-card {
+                min-width: 280px;
+                max-width: 320px;
+                flex-shrink: 0;
+                scroll-snap-align: center;
+            }
+
+            .scroll-hint {
+                display: block;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-badges {
+                flex-direction: column;
+            }
+
+            .platform-badge {
+                justify-content: center;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <div class="container header-container">
+            <a class="logo" href="https://impactgraphicsza.co.za/index.html">
+                <img alt="Impact Graphics ZA Logo" src="home logo.png" />
+                <span style="color:#ffffff;">Impact Graphics ZA</span>
+            </a>
+            <div class="mobile-menu"><i class="fas fa-bars"></i></div>
+
+            <div class="nav-right">
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Mobile Theme Toggle -->
+                <div class="mobile-section-label">PREFERENCES</div>
+                <div class="mobile-theme-toggle" onclick="toggleTheme()">
+                    <span>Theme</span>
+                    <i class="fas fa-sun" id="mobileThemeIcon"></i>
+                </div>
+
+                <!-- Mobile Auth Buttons -->
+                <div class="mobile-section-label">ACCOUNT</div>
+                <div class="mobile-auth-buttons">
+                    <a class="btn-sign-in" href="https://impact-graphics-za-266ef.web.app/">Sign In</a>
+                    <a class="btn-create-account" href="https://impact-graphics-za-266ef.web.app/">Create Account</a>
+                </div>
+
+                <!-- Desktop Auth Buttons -->
+                <div class="auth-buttons">
+                    <a class="btn-sign-in" href="https://impact-graphics-za-266ef.web.app/">Sign In</a>
+                    <a class="btn-create-account" href="https://impact-graphics-za-266ef.web.app/">Create Account</a>
+                </div>
+
+                <!-- Desktop Theme Toggle -->
+                <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-sun" id="themeIcon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Launch Banner - NEW FEATURE -->
+    <section class="app-launch-banner">
+        <div class="container">
+            <div class="app-launch-content">
+                <div class="launch-info">
+                    <div class="launch-badge">
+                        <i class="fas fa-rocket"></i>
+                        <span>PRE-RELEASE AVAILABLE NOW</span>
+                    </div>
+                    <h2>🎉 Our Web App is Live! Mobile Apps Coming Next Week!</h2>
+                    <p>Try our pre-release web app today and be the first to experience our mobile apps launching next
+                        week on iOS App Store and Google Play Store.</p>
+                    <div class="launch-date">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>iOS & Android Launch: Next Week</span>
+                    </div>
+                    <div class="platform-badges">
+                        <div class="platform-badge">
+                            <i class="fab fa-apple"></i>
+                            <span>iOS App Store</span>
+                            <span class="coming-soon-badge">SOON</span>
+                        </div>
+                        <div class="platform-badge">
+                            <i class="fab fa-google-play"></i>
+                            <span>Google Play</span>
+                            <span class="coming-soon-badge">SOON</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="launch-actions">
+                    <a class="btn-web-app" href="https://impact-graphics-za-266ef.web.app/" target="_blank">
+                        <i class="fas fa-globe"></i>
+                        <span>Try Web App Now</span>
+                    </a>
+                    <a class="btn-notify" href="#contact">
+                        <i class="fas fa-bell"></i>
+                        <span>Notify Me</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Elevate Your Brand with Impact Graphics ZA</h1>
+                <p>We deliver powerful marketing solutions that drive results and help your business stand out in the
+                    digital landscape.</p>
+                <a class="btn" href="#contact">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>We offer comprehensive marketing solutions tailored to your business needs</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-img"><img alt="Graphic Design" src="graphics.JPEG" /></div>
+                    <div class="service-content">
+                        <h3>Graphic Design</h3>
+                        <p>Bring your brand to life with our custom graphic design services. From logos to brochures, we
+                            create visual solutions that elevate your business.</p>
+                        <div class="price">From R300</div>
+                        <a class="btn" href="https://impactgraphicsza.co.za/graphics-design/">Get Quote</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img"><img alt="Social Media Marketing" src="social media Marketing.jpg" /></div>
+                    <div class="service-content">
+                        <h3>Social Media Marketing</h3>
+                        <p>Take your social media to the next level. Our expert team helps you increase your following,
+                            engagement, and online visibility.</p>
+                        <div class="price">From R500/month</div>
+                        <a class="btn" href="#contact">Get Quote</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img"><img alt="Web Design"
+                            src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Web Design</h3>
+                        <p>Get a website that perfectly represents your brand. Our team designs and develops all types
+                            of websites, tailored to your unique needs and goals.</p>
+                        <div class="price">From R2,000</div>
+                        <a class="btn" href="#contact">Get Quote</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img"><img alt="App Development"
+                            src="/Blue and Yellow Modern Mobile App Development Service Instagram Post.png" /></div>
+                    <div class="service-content">
+                        <h3>App Development & Gadget Leasing</h3>
+                        <p>Delivering high-impact technology solutions including custom app development and gadget
+                            leasing services to businesses across South Africa.</p>
+                        <div class="price">From R10,000</div>
+                        <a class="btn" href="https://impactgraphicsza.co.za/App development/">Get Quote</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img"><img alt="SEO"
+                            src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" />
+                    </div>
+                    <div class="service-content">
+                        <h3>Search Engine Optimization (SEO)</h3>
+                        <p>Improve your website's visibility and ranking on search engines to attract more organic
+                            traffic and potential customers.</p>
+                        <div class="price">From R1,500/month</div>
+                        <a class="btn" href="#contact">Get Quote</a>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-img"><img alt="Streaming Services" src="streaming services.jpg" /></div>
+                    <div class="service-content">
+                        <h3>Streaming Services</h3>
+                        <p>Take your events, conferences, and live performances to a global audience with our expert
+                            online streaming solution.</p>
+                        <div class="price">From R2,000/event</div>
+                        <a class="btn" href="#contact">Get Quote</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Marketing Packages</h2>
+                <p>Choose the perfect package for your business needs</p>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">R1,500 | <span>R500/month</span></div>
+                    <ul>
+                        <li>Basic Social Media Management</li>
+                        <li>5 Graphic Designs/month</li>
+                        <li>Content Creation</li>
+                        <li>Monthly Analytics Report</li>
+                        <li>Email Support</li>
+                    </ul>
+                    <a class="btn" href="#contact">Get Started</a>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-tag">Most Popular</div>
+                    <h3>Growth</h3>
+                    <div class="price">R3,000 | <span>R800/month</span></div>
+                    <ul>
+                        <li>Advanced Social Media Management</li>
+                        <li>10 Graphic Designs/month</li>
+                        <li>Content Strategy</li>
+                        <li>Basic SEO</li>
+                        <li>Weekly Analytics Report</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a class="btn" href="#contact">Get Started</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Premium</h3>
+                    <div class="price">R5,000 | <span>R1,499/month</span></div>
+                    <ul>
+                        <li>Full Social Media Management</li>
+                        <li>Unlimited Graphic Designs</li>
+                        <li>Comprehensive Content Strategy</li>
+                        <li>Advanced SEO</li>
+                        <li>Website Maintenance</li>
+                        <li>24/7 Support</li>
+                        <li>Monthly Strategy Session</li>
+                    </ul>
+                    <a class="btn" href="#contact">Get Started</a>
+                </div>
+            </div>
+
+            <div class="scroll-hint">
+                <i class="fas fa-arrow-left"></i> Swipe left or right to see more packages <i
+                    class="fas fa-arrow-right"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Impact Graphics ZA</h2>
+                    <p>Impact Graphics ZA is a premier marketing agency based in South Africa, dedicated to helping
+                        businesses of all sizes establish a powerful online presence and connect with their target
+                        audience.</p>
+                    <p>Our team of creative professionals brings together expertise in graphic design, digital
+                        marketing, web development, and multimedia production to deliver comprehensive solutions that
+                        drive real results.</p>
+                    <p>We believe in building long-term relationships with our clients, understanding their unique
+                        needs, and crafting customized strategies that align with their business goals.</p>
+                    <a class="btn" href="#contact">Contact Us</a>
+                </div>
+                <div class="about-img"><img alt="Our Team" src="graphics.JPEG" /></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Ready to take your marketing to the next level? Contact us today for a free consultation.</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p>Fill out the form or reach out to us directly through any of the channels below.</p>
+                    <div class="contact-details">
+                        <div><i class="fas fa-map-marker-alt"></i><span>1386 viola street, Lehae</span></div>
+                        <div><i class="fas fa-phone"></i><span>+27 68 367 5755</span></div>
+                        <div><i class="fas fa-envelope"></i><span>info@impactgraphicsza.co.za</span></div>
+                        <div><i class="fas fa-clock"></i><span>Mon-Fri: 9:00 AM - 5:00 PM</span></div>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form>
+                        <input placeholder="Your Name" required="" type="text" />
+                        <input placeholder="Your Email" required="" type="email" />
+                        <input placeholder="Subject" type="text" />
+                        <textarea placeholder="Your Message" required=""></textarea>
+                        <button class="btn" type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Impact Graphics ZA</h3>
+                    <p>Your trusted partner for comprehensive marketing solutions that drive growth and elevate your
+                        brand.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Graphic Design</a></li>
+                        <li><a href="#">Social Media Marketing</a></li>
+                        <li><a href="#">Web Design</a></li>
+                        <li><a href="#">App Development</a></li>
+                        <li><a href="#">SEO</a></li>
+                        <li><a href="#">Streaming Services</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="https://impact-graphics-za-266ef.web.app/" target="_blank">Web App</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for the latest marketing tips and offers.</p>
+                    <form>
+                        <input placeholder="Your Email" required="" style="margin-bottom: 10px;" type="email" />
+                        <button class="btn" type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 Impact Graphics ZA. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu');
+        const navRight = document.querySelector('.nav-right');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navRight.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navRight.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    if (navRight.classList.contains('active')) {
+                        navRight.classList.remove('active');
+                        const icon = mobileMenuBtn.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                }
+            });
+        });
+
+        // Header shadow on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.5)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('header') && navRight.classList.contains('active')) {
+                navRight.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Theme Toggle Function
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+            const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+
+            body.classList.toggle('light-mode');
+
+            if (body.classList.contains('light-mode')) {
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+                if (mobileThemeIcon) {
+                    mobileThemeIcon.classList.remove('fa-sun');
+                    mobileThemeIcon.classList.add('fa-moon');
+                }
+                localStorage.setItem('theme', 'light');
+            } else {
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
+                if (mobileThemeIcon) {
+                    mobileThemeIcon.classList.remove('fa-moon');
+                    mobileThemeIcon.classList.add('fa-sun');
+                }
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load saved theme on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const themeIcon = document.getElementById('themeIcon');
+            const mobileThemeIcon = document.getElementById('mobileThemeIcon');
+
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+                if (mobileThemeIcon) {
+                    mobileThemeIcon.classList.remove('fa-sun');
+                    mobileThemeIcon.classList.add('fa-moon');
+                }
+            }
+
+            // Center popular pricing card on mobile
+            if (window.innerWidth <= 768) {
+                const pricingGrid = document.querySelector('.pricing-grid');
+                const popularCard = document.querySelector('.pricing-card.popular');
+
+                if (pricingGrid && popularCard) {
+                    setTimeout(() => {
+                        popularCard.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'nearest',
+                            inline: 'center'
+                        });
+                    }, 100);
+                }
+            }
+        });
+
+        // Re-center on resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 768) {
+                const pricingGrid = document.querySelector('.pricing-grid');
+                const popularCard = document.querySelector('.pricing-card.popular');
+
+                if (pricingGrid && popularCard) {
+                    popularCard.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

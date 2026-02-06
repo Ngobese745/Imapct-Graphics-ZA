@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paystack Webhook Handler</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-functions-compat.js"></script>
+</head>
+
+<body>
+    <h1>Paystack Webhook Handler</h1>
+    <p>This endpoint processes Paystack webhook notifications.</p>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyC7qZQ2qQ2qQ2qQ2qQ2qQ2qQ2qQ2qQ2qQ",
+            authDomain: "impact-graphics-za-266ef.firebaseapp.com",
+            projectId: "impact-graphics-za-266ef",
+            storageBucket: "impact-graphics-za-266ef.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef1234567890abcdef"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Webhook handler function
+        async function handleWebhook(payload) {
+            try {
+                console.log('Webhook received:', payload);
+
+                const event = payload.event;
+                const data = payload.data;
+
+                if (event === 'charge.success') {
+                    await processSuccessfulPayment(data);
+                } else if (event === 'subscription.create') {
+                    await processSubscriptionCreated(data);
+                } else if (event === 'subscription.enable') {
+                    await processSubscriptionEnabled(data);
+                } else if (event === 'subscription.disable') {
+                    await processSubscriptionDisabled(data);
+                }
+
+                return { success: true, message: 'Webhook processed successfully' };
+            } catch (error) {
+                console.error('Error processing webhook:', error);
+                return { success: false, message: error.message };
+            }
+        }
+
+        // Process successful payment
+        async function processSuccessfulPayment(data) {
+            const reference = data.reference;
+            const amount = data.amount / 100; // Convert from kobo to naira
+            const customer = data.customer;
+            const email = customer ? customer.email : null;
+
+            console.log('Processing payment:', reference, amount, email);
+
+            // Find order by payment reference
+            const orderQuery = await db.collection('orders')
+                .where('paymentReference', '==', reference)
+                .limit(1)
+                .get();
+
+            if (!orderQuery.empty) {
+                const orderDoc = orderQuery.docs[0];
+                const orderData = orderDoc.data();
+
+                // Update order status
+                await orderDoc.ref.update({
+                    status: 'completed',
+                    paymentStatus: 'success',
+                    paymentVerifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                // Clear user cart
+                const userId = orderData.userId;
+                if (userId) {
+                    await db.collection('users').doc(userId).update({
+                        cart: [],
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+
+                // Send notification
+                await db.collection('notifications').add({
+                    userId: userId,
+                    type: 'order',
+                    title: 'Payment Successful! 🎉',
+                    message: `Your order has been processed successfully. Order ID: ${orderDoc.id}`,
+                    data: {
+                        orderId: orderDoc.id,
+                        status: 'completed',
+                        amount: amount
+                    },
+                    priority: 'high',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    isRead: false
+                });
+
+                console.log('Order updated successfully:', orderDoc.id);
+            } else {
+                // Try to process from pending payment data
+                await processPendingPayment(reference, amount, email);
+            }
+        }
+
+        // Process pending payment
+        async function processPendingPayment(reference, amount, email) {
+            try {
+                // Get pending payment data from localStorage (if available)
+                const pendingKey = `pending_payment_${reference}`;
+                const pendingData = localStorage.getItem(pendingKey);
+
+                if (pendingData) {
+                    const data = JSON.parse(pendingData);
+                    const cartItems = data.cartItems;
+                    const userId = data.userId;
+                    const customerName = data.customerName;
+                    const customerEmail = data.customerEmail;
+
+                    if (cartItems && userId) {
+                        // Create order
+                        const orderData = {
+                            userId: userId,
+                            customerName: customerName || email || 'Unknown',
+                            customerEmail: customerEmail || email || '',
+                            items: cartItems,
+                            totalAmount: amount,
+                            paymentReference: reference,
+                            paymentStatus: 'success',
+                            status: 'completed',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            paymentVerifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        };
+
+                        const orderDoc = await db.collection('orders').add(orderData);
+
+                        // Clear cart
+                        await db.collection('users').doc(userId).update({
+                            cart: [],
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+
+                        // Clear pending payment data
+                        localStorage.removeItem(pendingKey);
+
+                        // Send notification
+                        await db.collection('notifications').add({
+                            userId: userId,
+                            type: 'order',
+                            title: 'Payment Successful! 🎉',
+                            message: `Your order has been processed successfully. Order ID: ${orderDoc.id}`,
+                            data: {
+                                orderId: orderDoc.id,
+                                status: 'completed',
+                                amount: amount
+                            },
+                            priority: 'high',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            isRead: false
+                        });
+
+                        console.log('Order created from pending payment:', orderDoc.id);
+                    }
+                }
+            } catch (error) {
+                console.error('Error processing pending payment:', error);
+            }
+        }
+
+        // Process subscription created
+        async function processSubscriptionCreated(data) {
+            console.log('Subscription created:', data.subscription_code);
+            // Add subscription logic here
+        }
+
+        // Process subscription enabled
+        async function processSubscriptionEnabled(data) {
+            console.log('Subscription enabled:', data.subscription_code);
+            // Add subscription logic here
+        }
+
+        // Process subscription disabled
+        async function processSubscriptionDisabled(data) {
+            console.log('Subscription disabled:', data.subscription_code);
+            // Add subscription logic here
+        }
+
+        // Handle POST requests (webhook calls)
+        if (typeof window !== 'undefined') {
+            // This is a client-side implementation
+            // For production, you should use Firebase Functions or a server-side endpoint
+            console.log('Webhook handler loaded');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{
+    "to": [
+        {
+            "email": "colane.comfort.5@gmail.com",
+            "name": "Colane Comfort"
+        }
+    ],
+    "subject": "✅ Email System Fixed - Test Email",
+    "html": "<h1>🎉 Email System Working!</h1><p>This test email confirms that the MailerSend API key has been successfully updated and the email system is now working again.</p><p><strong>✅ New API Key:</strong> mlsn.67a87f****** (Impact token)</p><p><strong>✅ Status:</strong> ACTIVE</p><p><strong>✅ Domain:</strong> impactgraphicsza.co.za</p><p><strong>✅ Extension:</strong> mailersend/mailersend-email@0.1.8</p><p><strong>📅 Fixed:</strong> October 20, 2025</p><hr><p>If you receive this email, the email system is fully restored and ready for production use!</p>",
+    "text": "🎉 Email System Working!\n\nThis test email confirms that the MailerSend API key has been successfully updated and the email system is now working again.\n\n✅ New API Key: mlsn.67a87f****** (Impact token)\n✅ Status: ACTIVE\n✅ Domain: impactgraphicsza.co.za\n✅ Extension: mailersend/mailersend-email@0.1.8\n📅 Fixed: October 20, 2025\n\nIf you receive this email, the email system is fully restored and ready for production use!",
+    "tags": [
+        "test",
+        "api-key-fix",
+        "email-system-restored"
+    ],
+    "created_at": "2025-10-20T02:15:24Z"
+}
+
