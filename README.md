@@ -1,154 +1,60 @@
-# Impact Graphics ZA - Flutter App
+# Impact Graphics ZA - Production App
 
-A professional cross-platform mobile application for Impact Graphics ZA, a leading graphics and design company in South Africa.
+## 🚀 Latest Features
 
-## Features
+### ✅ Enhanced Daily Ad Reward System
+- **Daily Limit**: Users can watch up to 10 ads per day
+- **Reward Structure**: R1 per ad, but users must watch all 10 ads to claim R10 total
+- **Smart UI**: Progress tracking with visual progress bar
+- **Claim System**: Special dialog appears when 10 ads are completed
 
-- **Home Screen**: Beautiful hero section with company branding and service previews
-- **Services**: Comprehensive list of graphic design services offered
-- **Portfolio**: Showcase of previous work and projects
-- **Contact**: Contact information, social media links, and contact form
-- **Modern UI**: Material Design 3 with dark red accent color (#8B0000)
-- **Cross-platform**: Works on iOS, Android, Web, Windows, macOS, and Linux
+### ✅ Priority Service Feature
+- **Graphics Design Services**: Logo Design, Business Card Design, Brochure Design, Poster Design
+- **Priority Option**: R100 fee for 1-2 day delivery instead of standard time
+- **Dynamic Pricing**: Automatically adds priority fee to total cost
 
-## Screenshots
+### ✅ Enhanced Splash Screen
+- **Professional Design**: Multi-layered gradients and animations
+- **Brand Colors**: Deep red and gold color scheme
+- **Dynamic Effects**: Floating particles, rotating shapes, wave animations
+- **Loading Indicators**: Smooth progress without loading bar
 
-The app features a modern, professional design with:
-- Gradient hero section with company branding
-- Service cards with icons and descriptions
-- Portfolio grid layout
-- Contact form with social media integration
-- Bottom navigation for easy navigation
+### ✅ Wallet System Improvements
+- **Consistent Data**: Unified wallet balance across all collections
+- **Transaction Logging**: Complete audit trail for all transactions
+- **Ad Integration**: Seamless ad reward tracking and claiming
 
-## Getting Started
-
-### Prerequisites
-
-- Flutter SDK (3.9.0 or higher)
-- Dart SDK
-- Android Studio / VS Code
-- iOS Simulator (for iOS development)
-- Android Emulator (for Android development)
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd impact_graphics_za
-```
-
-2. Install dependencies:
-```bash
-flutter pub get
-```
-
-3. Run the app:
-```bash
-flutter run
-```
-
-### Building for Production
-
-#### Android
-```bash
-flutter build apk --release
-```
-
-#### iOS
-```bash
-flutter build ios --release
-```
-
-#### Web
-```bash
-flutter build web --release
-```
-
-#### Desktop
-```bash
-flutter build windows --release  # Windows
-flutter build macos --release    # macOS
-flutter build linux --release    # Linux
-```
-
-## Project Structure
+## 📱 App Structure
 
 ```
 lib/
-├── main.dart              # Main app entry point
-├── screens/               # App screens (if organized)
-│   ├── home_screen.dart
-│   ├── services_screen.dart
-│   ├── portfolio_screen.dart
-│   └── contact_screen.dart
-└── widgets/               # Reusable widgets (if organized)
-    └── custom_widgets.dart
-
-assets/
-├── images/               # Image assets
-└── icons/               # Icon assets
+├── main.dart                 # Main app with priority features
+├── screens/
+│   ├── wallet_screen.dart    # Enhanced with daily ad progress
+│   ├── smooth_loading_screen.dart  # Professional splash screen
+│   └── ...
+├── services/
+│   ├── daily_ad_tracking_service.dart  # New daily ad system
+│   ├── wallet_service.dart   # Improved wallet management
+│   └── ...
+└── ...
 ```
 
-## Dependencies
+## 🎯 Key Features
 
-- `flutter`: Core Flutter framework
-- `cupertino_icons`: iOS-style icons
-- `url_launcher`: For opening URLs and launching external apps
-- `font_awesome_flutter`: Font Awesome icons
-- `cached_network_image`: For efficient image loading and caching
-- `flutter_staggered_grid_view`: For advanced grid layouts
+1. **Daily Ad Rewards**: Watch 10 ads → Claim R10
+2. **Priority Services**: R100 for faster delivery
+3. **Professional UI**: Enhanced splash screen and wallet interface
+4. **Consistent Data**: Unified wallet and transaction system
 
-## Customization
+## 🔧 Development
 
-### Colors
-The app uses a dark red accent color (#8B0000) throughout. To change the color scheme:
+This is the production-ready version with all latest features implemented and tested.
 
-1. Update the `primaryColor` in `main.dart`
-2. Update the `Color(0xFF8B0000)` instances throughout the code
-3. Update the `colorScheme` seed color
+## 📋 Recent Updates
 
-### Content
-- Update company information in the contact section
-- Replace placeholder content with actual services and portfolio items
-- Add real images to the assets folder
-- Update social media links
-
-### Styling
-- Modify the theme in `main.dart` for global styling changes
-- Update individual widget styles for specific components
-- Customize the gradient colors in the hero section
-
-## Features to Add
-
-- [ ] Image gallery for portfolio items
-- [ ] Push notifications
-- [ ] Offline support
-- [ ] User authentication
-- [ ] Admin panel for content management
-- [ ] Analytics integration
-- [ ] Multi-language support
-- [ ] Dark mode toggle
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-Impact Graphics ZA
-- Email: info@impactgraphics.co.za
-- Phone: +27 123 456 789
-- Address: Johannesburg, South Africa
-
-## Support
-
-For support and questions, please contact the development team or create an issue in the repository.
+- ✅ Daily ad tracking system
+- ✅ Priority checkbox for graphics services
+- ✅ Enhanced splash screen animations
+- ✅ Wallet system improvements
+- ✅ Clean codebase with no debug code# Imapct-Graphics-ZA
