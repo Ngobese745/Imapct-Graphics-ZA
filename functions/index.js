@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
+const { onDocumentCreated: onDocumentCreatedV2 } = require('firebase-functions/v2/firestore');
+const { onCall: onCallV2, onRequest: onRequestV2, onRequest } = require('firebase-functions/v2/https');
 
 admin.initializeApp();
 
@@ -819,8 +821,387 @@ exports.imageProxy = functions.https.onRequest(async (req, res) => {
       });
     } else if (error.code === 'ECONNABORTED') {
       res.status(504).json({ error: 'Request timeout' });
-    } else {
-      res.status(500).json({ error: 'Internal server error', message: error.message });
     }
+  }
+});
+
+// ==========================================
+// WhatsApp & OpenRouter Integration (v2)
+// ==========================================
+
+// Imports moved to top of file
+
+const OPENROUTER_API_KEY = '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';
+const YOUR_SITE_URL = 'https://impactgraphicsza.co.za';
+const YOUR_SITE_NAME = 'Impact Graphics ZA';
+
+// ------------------------------------------------------------------
+// WeSander Credentials
+// ------------------------------------------------------------------
+// In production, best practice is to store these in Firestore (system_settings/secrets)
+// or Firebase Secrets Manager. For ease of setup, we use these as fallbacks.
+const WESANDER_API_KEY_FALLBACK = '92ee21db84705de50cfd349c9b10f6a2d81c82d472ac302ab7539bedc53cd7ee';
+const WESANDER_SECRET_KEY = 'd0d90f28fd85f0408796110524b61650';
+
+// Helper to get API Key (Firestore first, then fallback)
+async function getWeSanderKey() {
+  try {
+    const secretsDoc = await admin.firestore().collection('system_settings').doc('secrets').get();
+    if (secretsDoc.exists && secretsDoc.data().wesander_key) {
+      return secretsDoc.data().wesander_key;
+    }
+  } catch (e) {
+    console.warn('Failed to fetch secrets from Firestore, using fallback.');
+  }
+  return WESANDER_API_KEY_FALLBACK;
+}
+
+// 1. WhatsApp Webhook (Receives messages from WeSander)
+exports.whatsappWebhook = onRequestV2({ cors: true }, async (req, res) => {
+  // CORS handled by v2 option
+  if (req.method === 'OPTIONS') {
+    res.status(204).send('');
+    return;
+  }
+
+  try {
+    console.log('🔍 INCOMING WEBHOOK:', JSON.stringify(req.body, null, 2));
+    console.log('🔍 HEADERS:', JSON.stringify(req.headers, null, 2));
+
+    // DEBUG: Capture payload to Firestore
+    await admin.firestore().collection('system_settings').doc('last_webhook_payload').set({
+      body: req.body,
+      headers: req.headers,
+      timestamp: admin.firestore.FieldValue.serverTimestamp()
+    });
+
+    // --- Security: Verify Signature ---
+    const signature = req.headers['x-webhook-signature'];
+    if (!signature) {
+      // console.warn('⚠️ Webhook missing Checksum/Signature'); // Optional warn
+    } else {
+      // Validate against Secret Key
+      if (signature !== WESANDER_SECRET_KEY) {
+        console.warn('⛔️ Webhook Signature Mismatch!');
+        res.status(403).send('Invalid Signature');
+        return;
+      }
+    }
+    // ----------------------------------
+
+    const body = req.body;
+
+    // Safety check for body structure
+    if (!body || !body.data) {
+      console.log('⚠️ Webhook body invalid or missing data');
+      res.status(200).send('Ignored');
+      return;
+    }
+
+    // Accept both 'messages.upsert' and 'messages.received'
+    if (body.event !== 'messages.upsert' && body.event !== 'messages.received') {
+      console.log(`ℹ️ Ignoring event type: ${body.event}`);
+      res.status(200).send('Ignored');
+      return;
+    }
+
+    // Handle different data structures
+    // Some events have data.messages, others might be direct
+    const messageData = body.data.messages || body.data;
+
+    // WeSander often sends specific keys like 'message' inside the structure
+    // Log for clarity
+    console.log('🔍 Processing Message Data:', JSON.stringify(messageData, null, 2));
+
+    const remoteJid = messageData.key?.remoteJid || messageData.from || messageData.remoteJid;
+
+    const phone = messageData.key?.cleanedSenderPn ||
+      (messageData.key?.senderPn ? messageData.key.senderPn.split('@')[0] : null) ||
+      messageData.cleanedSenderPn ||
+      (messageData.senderPn ? messageData.senderPn.split('@')[0] : null) ||
+      (remoteJid ? remoteJid.split('@')[0] : null);
+
+    const messageText = messageData.messageBody ||
+      messageData.message?.conversation ||
+      messageData.message?.extendedTextMessage?.text ||
+      messageData.body;
+
+    const senderName = messageData.pushName || messageData.verifiedBizName || 'Unknown User';
+    const isFromMe = messageData.key?.fromMe || false;
+
+    if (isFromMe) {
+      res.status(200).send('Ignored');
+      return;
+    }
+
+    if (!phone || !messageText) {
+      res.status(200).send('Missing Data');
+      return;
+    }
+
+    console.log(`📨 New Message from ${senderName} (${phone}): ${messageText}`);
+
+    const conversationRef = admin.firestore().collection('whatsapp_conversations').doc(phone);
+    const messagesRef = conversationRef.collection('messages');
+
+    await admin.firestore().runTransaction(async (t) => {
+      const conversationDoc = await t.get(conversationRef);
+
+      if (!conversationDoc.exists) {
+        t.set(conversationRef, {
+          phoneNumber: phone,
+          userName: senderName,
+          lastMessage: messageText,
+          lastMessageAt: admin.firestore.FieldValue.serverTimestamp(),
+          unreadCount: 1,
+          ai_active: true,
+          createdAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      } else {
+        t.update(conversationRef, {
+          lastMessage: messageText,
+          lastMessageAt: admin.firestore.FieldValue.serverTimestamp(),
+          unreadCount: admin.firestore.FieldValue.increment(1),
+          userName: senderName
+        });
+      }
+
+      const newMessageRef = messagesRef.doc();
+      t.set(newMessageRef, {
+        text: messageText,
+        isFromUser: true,
+        timestamp: admin.firestore.FieldValue.serverTimestamp(),
+        wesanderId: messageData.key?.id || null
+      });
+    });
+
+    res.status(200).send('Processed');
+
+  } catch (error) {
+    console.error('❌ Webhook error:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+// 2. AI Auto-Reply Bot (Firestore Trigger v2)
+exports.whatsappAutoReply = onDocumentCreatedV2("whatsapp_conversations/{phone}/messages/{messageId}", async (event) => {
+  const snap = event.data;
+  if (!snap) return; // Deleted?
+
+  const messageData = snap.data();
+  const phone = event.params.phone;
+
+  if (!messageData.isFromUser) return;
+
+  console.log(`🤖 Checking Auto-Reply for ${phone}...`);
+
+  try {
+    const chatDoc = await admin.firestore().collection('whatsapp_conversations').doc(phone).get();
+    if (!chatDoc.exists || !chatDoc.data().ai_active) {
+      console.log('🔕 AI is DISABLED for this chat.');
+      return;
+    }
+
+    const settingsDoc = await admin.firestore().collection('system_settings').doc('whatsapp_bot').get();
+    const systemPrompt = settingsDoc.exists ? settingsDoc.data().prompt :
+      "You are the Personal Assistant (PA) for Colane Ngobese, born 2000/02/10, from Lehae, " +
+      "the founder of Impact Graphics ZA, GigLinkSA, and technical operator for MwelaseFin, Faithbase, UthandoMP and more " +
+      "You act as Colane’s realistic clone in WhatsApp-style chats. " +
+      "Tone: Polite, respectful, and concise — not overly friendly, but engaging and reactive. " +
+      "You can laugh, react with short expressions, and keep the flow natural. " +
+      "1. Introduce yourself as Colane’s PA, mention he’s tied up but you’ll brief him. " +
+      "2. After the intro, continue the chat as if you are Colane himself, managing conversations directly. " +
+      "3. Relate to what the other person is saying — don’t just talk about Impact Graphics, but connect their topic to Colane’s life, work, or interests. " +
+      "4. Use knowledge about Colane: South African entrepreneur, creative strategist, tech problem-solver, and advocate for artists and communities. " +
+      "5. If you don’t understand the language, politely ask for English. " +
+      "6. Answer questions about design, branding, websites, finance, or daily life with realistic, snappy replies. " +
+      "7. Keep it short, simple, and informal — like a real WhatsApp chat, no corporate talk. " +
+      "8. Show personality: laugh when appropriate, react naturally, and engage with respect.";
+
+
+    const historySnap = await admin.firestore()
+      .collection('whatsapp_conversations')
+      .doc(phone)
+      .collection('messages')
+      .orderBy('timestamp', 'desc')
+      .limit(10)
+      .get();
+
+    const history = historySnap.docs.map(doc => ({
+      role: doc.data().isFromUser ? 'user' : 'assistant',
+      content: doc.data().text
+    })).reverse();
+
+    console.log('🧠 Calling OpenRouter AI (Trinity Large Preview)...');
+    let replyText = "I'm sorry, I'm having trouble connecting right now.";
+
+    try {
+      const aiResponse = await axios.post(
+        'https://openrouter.ai/api/v1/chat/completions',
+        {
+          model: 'arcee-ai/trinity-large-preview:free', // Restored User's preferred model
+          messages: [
+            { role: 'system', content: systemPrompt },
+            ...history
+          ]
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+            'HTTP-Referer': YOUR_SITE_URL, // Required for free models
+            'X-Title': 'Impact Graphics WhatsApp Bot', // Required for free models
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      replyText = aiResponse.data.choices[0].message.content;
+    } catch (aiError) {
+      console.error('OpenRouter Error:', aiError.response?.data || aiError.message);
+      return;
+    }
+
+    console.log(`💡 AI Reply: ${replyText}`);
+
+    // Send via WeSander
+    const wesanderKey = await getWeSanderKey();
+
+    if (wesanderKey) {
+      // Resolve real phone number handles LID cases
+      const conversationDoc = await admin.firestore().collection('whatsapp_conversations').doc(phone).get();
+      let targetPhone = phone;
+
+      if (conversationDoc.exists && conversationDoc.data().phoneNumber) {
+        targetPhone = conversationDoc.data().phoneNumber;
+      }
+
+      // Sanitize: Remove +, spaces, and non-numeric chars
+      targetPhone = targetPhone.replace(/\D/g, '');
+
+      // Ensure proper JID format (Country code 27 fallback if missing is optional but safe to assume provided full)
+      const formattedPhone = targetPhone.includes('@') ? targetPhone : `${targetPhone}@s.whatsapp.net`;
+
+      await axios.post('https://wasenderapi.com/api/send-message', {
+        to: formattedPhone,
+        text: replyText
+      }, {
+        headers: { 'Authorization': `Bearer ${wesanderKey}` }
+      });
+      console.log('📤 Message sent via WeSander');
+    } else {
+      console.log('⚠️ WeSander Key missing. Reply stored but NOT sent.');
+    }
+
+    // Save Bot Reply
+    await admin.firestore()
+      .collection('whatsapp_conversations')
+      .doc(phone)
+      .collection('messages')
+      .add({
+        text: replyText,
+        isFromUser: false,
+        isAi: true,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+  } catch (error) {
+    console.error('❌ Auto-Reply Error:', error);
+  }
+});
+
+// 4. Cleanup Corrupt Chats (Temporary Utility)
+exports.cleanupCorruptChats = onRequest(async (req, res) => {
+  try {
+    const snapshot = await admin.firestore().collection('whatsapp_conversations').get();
+    const batch = admin.firestore().batch();
+    let deletedCount = 0;
+
+    snapshot.forEach(doc => {
+      const id = doc.id;
+      // Valid phone numbers are 10-15 digits. 
+      // Force delete the target LID specifically.
+      const isTargetLID = id === '71649281994927';
+      const isValidPhone = /^\d{10,15}$/.test(id);
+
+      if (!isValidPhone || isTargetLID) {
+        console.log(`Deleting corrupt chat: ${id}`);
+        batch.delete(doc.ref);
+        deletedCount++;
+      }
+    });
+
+    if (deletedCount > 0) {
+      await batch.commit();
+    }
+
+    res.send(`Cleanup complete. Deleted ${deletedCount} corrupt conversations.`);
+  } catch (error) {
+    console.error('Cleanup Error:', error);
+    res.status(500).send('Cleanup Failed');
+  }
+});
+
+exports.sendWhatsAppMessage = onCallV2(async (request) => {
+  // v2: request.auth, request.data
+  if (!request.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
+  }
+
+  const { phone, message } = request.data;
+
+  if (!phone || !message) {
+    throw new functions.https.HttpsError('invalid-argument', 'Phone and message are required.');
+  }
+
+  try {
+    const wesanderKey = await getWeSanderKey();
+
+    if (!wesanderKey) {
+      throw new functions.https.HttpsError('failed-precondition', 'WeSander API Key not configured.');
+    }
+
+    // Resolve real phone number from Firestore (handles LID cases)
+    const conversationDoc = await admin.firestore().collection('whatsapp_conversations').doc(phone).get();
+    let targetPhone = phone;
+
+    if (conversationDoc.exists && conversationDoc.data().phoneNumber) {
+      targetPhone = conversationDoc.data().phoneNumber;
+    }
+
+    // Sanitize: Remove +, spaces, and non-numeric chars
+    targetPhone = targetPhone.replace(/\D/g, '');
+
+    // Ensure proper JID format
+    const formattedPhone = targetPhone.includes('@') ? targetPhone : `${targetPhone}@s.whatsapp.net`;
+
+    await axios.post('https://wasenderapi.com/api/send-message', {
+      to: formattedPhone,
+      text: message
+    }, {
+      headers: { 'Authorization': `Bearer ${wesanderKey}` }
+    });
+
+    await admin.firestore()
+      .collection('whatsapp_conversations')
+      .doc(phone)
+      .collection('messages')
+      .add({
+        text: message,
+        isFromUser: false,
+        isAi: false,
+        isManuallySent: true,
+        adminId: request.auth.uid,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
+      });
+
+    await admin.firestore().collection('whatsapp_conversations').doc(phone).update({
+      lastMessage: message,
+      lastMessageAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    return { success: true };
+
+  } catch (error) {
+    console.error('❌ Send Message Error:', error);
+    throw new functions.https.HttpsError('internal', error.message);
   }
 });

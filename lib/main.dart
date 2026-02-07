@@ -82,6 +82,7 @@ import 'widgets/whatsapp_dialog.dart';
 // import 'screens/admin_dashboard_screen.dart';
 // import 'screens/auth_screen.dart'; // Removed duplicate AuthScreen
 // import 'screens/dashboard_screen.dart'; // Removed duplicate DashboardScreen
+import 'screens/admin_whatsapp_screen.dart';
 
 // Global theme notifier for app-wide theme switching
 ValueNotifier<ThemeMode> themeModeNotifier = ValueNotifier(ThemeMode.dark);
@@ -25434,7 +25435,6 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
     _adminTabController = TabController(length: 1, vsync: this);
     _setupRealTimeListeners();
     _setupPortfolioNotificationCallback();
-    _updateSidebarVisibility();
   }
 
   @override
@@ -25699,6 +25699,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                   Icons.chat_bubble_outline,
                   _currentScreen == 'consultations',
                   () => _setScreen('consultations'),
+                ),
+                _buildNavItem(
+                  'WHATSAPP',
+                  Icons.chat,
+                  _currentScreen == 'whatsapp',
+                  () => _setScreen('whatsapp'),
                 ),
                 _buildNavItem(
                   'PACKAGES',
@@ -26440,6 +26446,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                                 ? _buildOrdersScreen()
                                 : _currentScreen == 'consultations'
                                 ? _buildConsultationsScreen()
+                                : _currentScreen == 'whatsapp'
+                                ? const AdminWhatsAppScreen()
                                 : _currentScreen == 'invoices'
                                 ? _buildInvoicesScreen()
                                 : _currentScreen == 'all_users_invoices'
