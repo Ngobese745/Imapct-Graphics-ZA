@@ -998,14 +998,13 @@ exports.whatsappAutoReply = onDocumentCreatedV2("whatsapp_conversations/{phone}/
 
     const settingsDoc = await admin.firestore().collection('system_settings').doc('whatsapp_bot').get();
     const systemPrompt = settingsDoc.exists ? settingsDoc.data().prompt :
-      "You are the Formal Personal Assistant (PA) for Colane Ngobese, the founder of Impact Graphics ZA, GigLinkSA, and technical operator for several ventures including MwelaseFin and Faithbase. " +
-      "Tone: Highly professional, formal, and respectful. Use clear and grammatically correct language. " +
-      "1. Formally introduce yourself as Colane's Personal Assistant and explicitly state that Colane is currently unavailable. " +
-      "2. Inform the user that you will be taking over the chat to assist them in the meantime, and that you will provide Colane with a complete briefing of the conversation later. " +
-      "3. Assist the user with professional inquiries regarding design, branding, websites, or business operations using Colane's established knowledge base. " +
-      "4. Maintain a polite and helpful demeanor throughout the interaction. " +
-      "5. If a message is received in a language you cannot process, formally request the user to communicate in English for better assistance. " +
-      "6. Ensure all responses are structured professionally and avoid informal expressions or overly casual tone.";
+      "You are the professional Personal Assistant for Colane Ngobese. Colane is currently unavailable, and you are managing this chat on his behalf to ensure continuity. " +
+      "Identity: You are taking over the conversation to assist and will provide Colane with a comprehensive briefing later. " +
+      "1. REGARDING GREETINGS: Only provide a formal greeting and self-introduction if the user initiates the conversation with a greeting (e.g., 'Hi', 'Hello'). If the conversation is ongoing or the user directly asks a question/makes a statement, simply respond to their point without repeating the intro. " +
+      "2. REGARDING BUSINESS: Do not mention Colane's businesses (Impact Graphics, GigLinkSA, etc.) unless the user explicitly asks about them or they are directly relevant to the current topic. " +
+      "3. TONE & STYLE: Be realistic, professional, and respectful. Avoid robotic or corporate-scripted language. Use clear, grammatically correct, but natural sentences. " +
+      "4. GOAL: Continue the chat as naturally as possible, focusing on being helpful while maintaining the persona of a reliable assistant. " +
+      "5. LANGUAGE: If you encounter a language you cannot process, politely request communication in English for better assistance.";
 
 
     const historySnap = await admin.firestore()
@@ -1105,72 +1104,70 @@ exports.whatsappAutoReply = onDocumentCreatedV2("whatsapp_conversations/{phone}/
   }
 });
 
-// 4. Cleanup Corrupt Chats (Temporary Utility)
-exports.cleanupCorruptChats = onRequest(async (req, res) => {
+// 4. Send Manuel WhatsApp Message
+exports.sendWhatsAppMessage = onCallV2(async (request) => {
+  // v2: request.auth, request.data
+  if (!request.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
+  }
 
-  exports.sendWhatsAppMessage = onCallV2(async (request) => {
-    // v2: request.auth, request.data
-    if (!request.auth) {
-      throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
+  const { phone, message } = request.data;
+
+  if (!phone || !message) {
+    throw new functions.https.HttpsError('invalid-argument', 'Phone and message are required.');
+  }
+
+  try {
+    const secrets = await getSecrets();
+    const wesanderKey = secrets.wesander_key || secrets.wesander_api_key;
+
+    if (!wesanderKey) {
+      throw new functions.https.HttpsError('failed-precondition', 'WeSander API Key not configured.');
     }
 
-    const { phone, message } = request.data;
+    // Resolve real phone number from Firestore (handles LID cases)
+    const conversationDoc = await admin.firestore().collection('whatsapp_conversations').doc(phone).get();
+    let targetPhone = phone;
 
-    if (!phone || !message) {
-      throw new functions.https.HttpsError('invalid-argument', 'Phone and message are required.');
+    if (conversationDoc.exists && conversationDoc.data().phoneNumber) {
+      targetPhone = conversationDoc.data().phoneNumber;
     }
 
-    try {
-      const secrets = await getSecrets();
-      const wesanderKey = secrets.wesander_key || secrets.wesander_api_key;
+    // Sanitize: Remove +, spaces, and non-numeric chars
+    targetPhone = targetPhone.replace(/\D/g, '');
 
-      if (!wesanderKey) {
-        throw new functions.https.HttpsError('failed-precondition', 'WeSander API Key not configured.');
-      }
+    // Ensure proper JID format
+    const formattedPhone = targetPhone.includes('@') ? targetPhone : `${targetPhone}@s.whatsapp.net`;
 
-      // Resolve real phone number from Firestore (handles LID cases)
-      const conversationDoc = await admin.firestore().collection('whatsapp_conversations').doc(phone).get();
-      let targetPhone = phone;
+    await axios.post('https://wasenderapi.com/api/send-message', {
+      to: formattedPhone,
+      text: message
+    }, {
+      headers: { 'Authorization': `Bearer ${wesanderKey}` }
+    });
 
-      if (conversationDoc.exists && conversationDoc.data().phoneNumber) {
-        targetPhone = conversationDoc.data().phoneNumber;
-      }
-
-      // Sanitize: Remove +, spaces, and non-numeric chars
-      targetPhone = targetPhone.replace(/\D/g, '');
-
-      // Ensure proper JID format
-      const formattedPhone = targetPhone.includes('@') ? targetPhone : `${targetPhone}@s.whatsapp.net`;
-
-      await axios.post('https://wasenderapi.com/api/send-message', {
-        to: formattedPhone,
-        text: message
-      }, {
-        headers: { 'Authorization': `Bearer ${wesanderKey}` }
+    await admin.firestore()
+      .collection('whatsapp_conversations')
+      .doc(phone)
+      .collection('messages')
+      .add({
+        text: message,
+        isFromUser: false,
+        isAi: false,
+        isManuallySent: true,
+        adminId: request.auth.uid,
+        timestamp: admin.firestore.FieldValue.serverTimestamp()
       });
 
-      await admin.firestore()
-        .collection('whatsapp_conversations')
-        .doc(phone)
-        .collection('messages')
-        .add({
-          text: message,
-          isFromUser: false,
-          isAi: false,
-          isManuallySent: true,
-          adminId: request.auth.uid,
-          timestamp: admin.firestore.FieldValue.serverTimestamp()
-        });
+    await admin.firestore().collection('whatsapp_conversations').doc(phone).update({
+      lastMessage: message,
+      lastMessageAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
 
-      await admin.firestore().collection('whatsapp_conversations').doc(phone).update({
-        lastMessage: message,
-        lastMessageAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
+    return { success: true };
 
-      return { success: true };
-
-    } catch (error) {
-      console.error('❌ Send Message Error:', error);
-      throw new functions.https.HttpsError('internal', error.message);
-    }
-  });
+  } catch (error) {
+    console.error('❌ Send Message Error:', error);
+    throw new functions.https.HttpsError('internal', error.message);
+  }
+});
