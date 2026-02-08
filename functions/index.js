@@ -991,20 +991,31 @@ exports.whatsappAutoReply = onDocumentCreatedV2("whatsapp_conversations/{phone}/
 
   try {
     const chatDoc = await admin.firestore().collection('whatsapp_conversations').doc(phone).get();
-    if (!chatDoc.exists || !chatDoc.data().ai_active) {
-      console.log('🔕 AI is DISABLED for this chat.');
+    const chatData = chatDoc.exists ? chatDoc.data() : {};
+
+    // 🔍 Fetch Global Settings
+    const settingsDoc = await admin.firestore().collection('system_settings').doc('whatsapp_bot').get();
+    const settingsData = settingsDoc.exists ? settingsDoc.data() : { ai_active: true };
+
+    // 🛑 STOP: Check Global Kill-Switch
+    if (settingsData.ai_active === false) {
+      console.log('🛑 AI is DISABLED GLOBALLY.');
       return;
     }
 
-    const settingsDoc = await admin.firestore().collection('system_settings').doc('whatsapp_bot').get();
-    const systemPrompt = settingsDoc.exists ? settingsDoc.data().prompt :
-      "You are the professional Personal Assistant for Colane Ngobese. Colane is currently unavailable, and you are managing this chat on his behalf to ensure continuity. " +
-      "Identity: You are taking over the conversation to assist and will provide Colane with a comprehensive briefing later. " +
-      "1. REGARDING GREETINGS: Only provide a formal greeting and self-introduction if the user initiates the conversation with a greeting (e.g., 'Hi', 'Hello'). If the conversation is ongoing or the user directly asks a question/makes a statement, simply respond to their point without repeating the intro. " +
-      "2. REGARDING BUSINESS: Do not mention Colane's businesses (Impact Graphics, GigLinkSA, etc.) unless the user explicitly asks about them or they are directly relevant to the current topic. " +
-      "3. TONE & STYLE: Be realistic, professional, and respectful. Avoid robotic or corporate-scripted language. Use clear, grammatically correct, but natural sentences. " +
-      "4. GOAL: Continue the chat as naturally as possible, focusing on being helpful while maintaining the persona of a reliable assistant. " +
-      "5. LANGUAGE: If you encounter a language you cannot process, politely request communication in English for better assistance.";
+    // 🛑 STOP: Check Per-Chat Toggle
+    if (chatData.ai_active === false) {
+      console.log(`🔕 AI is DISABLED for chat: ${phone}`);
+      return;
+    }
+
+    const systemPrompt = settingsData.prompt ||
+      "You are the Highly Professional Personal Assistant for Colane Ngobese. Colane is currently engaged and unavailable; you are managing this communication to ensure business continuity. " +
+      "1. IDENTITY: Explicitly state you are Colane's Assistant. Inform the user you are assisting in his absence and will provide him with a full briefing. " +
+      "2. LANGUAGE: You MUST communicate STRICTLY in English. If a user speaks any other language, politely and formally inform them that you can only assist in English. Never translate your responses into other languages. " +
+      "3. TONE: Maintain a highly formal, professional, and respectful tone at all times. Use polished and grammatically flawless English. Avoid all informalities, slang, or emojis unless professionally appropriate. " +
+      "4. CONTEXT: Only provide a greeting/introduction if the sender initiates with a greeting. Do not mention specific business ventures unless they are directly relevant to the user's inquiry. " +
+      "5. BEHAVIOR: Continue the chat naturally and helpfully, but always within the bounds of a formal assistant persona.";
 
 
     const historySnap = await admin.firestore()
@@ -1104,7 +1115,22 @@ exports.whatsappAutoReply = onDocumentCreatedV2("whatsapp_conversations/{phone}/
   }
 });
 
-// 4. Send Manuel WhatsApp Message
+// 4. Initialize/Fix Global Settings
+exports.initializeSettings = onRequest(async (req, res) => {
+  try {
+    await admin.firestore().collection('system_settings').doc('whatsapp_bot').set({
+      ai_active: true,
+      lastUpdated: admin.firestore.FieldValue.serverTimestamp()
+    }, { merge: true });
+
+    res.status(200).send('✅ Global Bot Settings Initialized (AI Active: true)');
+  } catch (error) {
+    console.error('Error initializing settings:', error);
+    res.status(500).send(`Error: ${error.message}`);
+  }
+});
+
+// 5. Send Manuel WhatsApp Message
 exports.sendWhatsAppMessage = onCallV2(async (request) => {
   // v2: request.auth, request.data
   if (!request.auth) {
