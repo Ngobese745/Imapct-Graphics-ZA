@@ -1115,21 +1115,6 @@ exports.whatsappAutoReply = onDocumentCreatedV2("whatsapp_conversations/{phone}/
   }
 });
 
-// 4. Initialize/Fix Global Settings
-exports.initializeSettings = onRequest(async (req, res) => {
-  try {
-    await admin.firestore().collection('system_settings').doc('whatsapp_bot').set({
-      ai_active: true,
-      lastUpdated: admin.firestore.FieldValue.serverTimestamp()
-    }, { merge: true });
-
-    res.status(200).send('✅ Global Bot Settings Initialized (AI Active: true)');
-  } catch (error) {
-    console.error('Error initializing settings:', error);
-    res.status(500).send(`Error: ${error.message}`);
-  }
-});
-
 // 5. Send Manuel WhatsApp Message
 exports.sendWhatsAppMessage = onCallV2(async (request) => {
   // v2: request.auth, request.data
